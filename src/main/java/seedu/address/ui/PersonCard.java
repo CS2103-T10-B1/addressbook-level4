@@ -8,6 +8,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.ReadOnlyPerson;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -17,6 +20,7 @@ public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
     private static String[] colours = {"red", "orange", "violet", "brown", "black", "green", "navy", "coral", "gray"};
+    private static HashMap<String, String> tagColours = new HashMap<>();
     private static Random random = new Random();
 
     /**
@@ -67,14 +71,18 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
-    private String getTagColour() {
-        return colours[random.nextInt(colours.length)];
+    private String getTagColour(String tagName) {
+        if (!tagColours.containsKey(tagName)) {
+            tagColours.put(tagName, colours[random.nextInt(colours.length)]);
+        }
+
+        return tagColours.get(tagName);
     }
 
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
-            tagLabel.setStyle("-fx-background-color:" + getTagColour());
+            tagLabel.setStyle("-fx-background-color:" + getTagColour(tag.tagName));
             tags.getChildren().add(tagLabel);
         });
     }
