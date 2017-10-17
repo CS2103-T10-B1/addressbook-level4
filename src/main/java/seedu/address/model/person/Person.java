@@ -24,11 +24,14 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Address> address;
 
     private ObjectProperty<UniqueTagList> tags;
+    private ObjectProperty<Favourite> favourite;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+
+
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Favourite favourite) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -36,14 +39,14 @@ public class Person implements ReadOnlyPerson {
         this.address = new SimpleObjectProperty<>(address);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        this.favourite = new SimpleObjectProperty<>(favourite);
     }
-
     /**
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getTags());
+                source.getTags(), source.getFavourite());
     }
 
     public void setName(Name name) {
@@ -121,6 +124,16 @@ public class Person implements ReadOnlyPerson {
     public void setTags(Set<Tag> replacement) {
         tags.set(new UniqueTagList(replacement));
     }
+
+    public Favourite getFavourite() {
+        return favourite.get();
+    }
+
+    @Override
+    public ObjectProperty<Favourite> favouriteProperty() {
+        return favourite;
+    }
+    public void setFavourite(Favourite favourite) { this.favourite.set(favourite); }
 
     @Override
     public boolean equals(Object other) {
