@@ -531,7 +531,7 @@ public class FavouriteCommand extends UndoableCommand {
 **Pros:** Easy to implement. +
 **Cons:** Does not preserve the original order of the contact list. +
 **Alternative 2:** Save the favourite contacts in a separate list without overwriting the original contact list +
-**Pros:** Does not mess up the original order.
+**Pros:** Does not mess up the original order. +
 **Cons:** Will use more memory (significant if favourite list is large).
 
 ---
